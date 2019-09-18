@@ -1,51 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import PokemonList from "./PokemonList";
-import axios from 'axios';
-import Pagination from './Pagination'
-import Search from "./Search"
+import React, { Component } from 'react';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
-function App() {
-  const [pokemon, setPokemon] = useState([])
-  const [currentPageUrl, setCurrentPageUrl] = useState("https://pokeapi.co/api/v2/pokemon")
-  const [nextPageUrl, setNextPageUrl] = useState()
-  const [prevPageUrl, setPrevPageUrl] = useState()
-  const [loading, setLoading] = useState(true)
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-  useEffect(() => {
-    setLoading(true)
-    let cancel
-    axios.get(currentPageUrl, {
-      cancelToken: new axios.CancelToken(c => cancel = c)
-    }).then(res => {
-      setLoading(false)
-      setNextPageUrl(res.data.next)
-      setPrevPageUrl(res.data.previous)
-      setPokemon(res.data.results.map(p => p.name))
-      // setSearch(res.data.results.map(p => )
-    })
+import './App.css';
 
-    return () => cancel()
-  }, [currentPageUrl])
+import backgroundImage from './pattern.png';
 
-  function gotoNextPage() {
-    setCurrentPageUrl(nextPageUrl)
+import NavBar from './components/layout/NavBar';
+import Dashboard from './components/layout/Dashboard';
+import SearchBar from './components/search/SearchBar';
+import Pokemon from './components/pokemon/Pokemon';
+
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <div className="App" style={{ background: `url(${backgroundImage})` }}>
+          <NavBar />
+          <div className="container">
+            <Switch>
+              <Route exact path="/" component={Dashboard} />
+              <Route exact path="/pokemon/:pokemonIndex" component={Pokemon} />
+            </Switch>
+          </div>
+        </div>
+      </Router>
+    );
   }
-  function gotoPrevPage() {
-    setCurrentPageUrl(prevPageUrl)
-  }
-
-  if (loading) return "Loading..."
-
-  return (
-    <>
-      <PokemonList pokemon={pokemon} />
-      <Pagination
-        gotoNextPage={nextPageUrl ? gotoNextPage : null}
-        gotoPrevPage={prevPageUrl ? gotoPrevPage : null}
-      />
-      <Search />
-    </>
-  );
 }
 
 export default App;
