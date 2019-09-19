@@ -128,6 +128,7 @@ export default class Pokemon extends Component {
       })
       .join(', ');
 
+
     // Get Pokemon Description .... Is from a different end point uggh
     await Axios.get(pokemonSpeciesUrl).then(res => {
       let description = '';
