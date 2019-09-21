@@ -20,7 +20,12 @@ export default class PokemonList extends Component {
       <div>
         {this.state.pokemon ? (
           <div className="row">
-            {this.state.pokemon.map(pokemon => (
+            {this.state.pokemon.filter(el => {
+              if(typeof el.name === typeof undefined || typeof this.props.search !== typeof "string"){
+                return false;
+              }
+                return el.name.toLowerCase().includes(this.props.search.toLowerCase().trim());
+            }).map(pokemon => (
               <PokemonCard
                 key={pokemon.name}
                 name={pokemon.name}
