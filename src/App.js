@@ -32,10 +32,10 @@ import PrivateRoute from "./components/layout/PrivateRoute";
       
       <Router>
         <div className="App" style={{ background: `url(${backgroundImage})` }}>
-          <NavBar />
+          <NavBar search={this.state.search} setSearch= {this.setSearch}/>
           <div className="container">
             <Switch>
-              <Route exact path="/" component={Dashboard} />
+              <Route exact path="/" render={() => <Dashboard search={this.state.search}/> } />
               <Route exact path="/pokemon/:pokemonIndex" component={Pokemon} />
               <Route path="/profile" component={Profile} />
               <PrivateRoute path="/profile" component={Profile} />

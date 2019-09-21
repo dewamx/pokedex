@@ -25,6 +25,7 @@ const TYPE_COLORS = {
 export default class Pokemon extends Component {
   state = {
     name: '',
+    ability: '',
     pokemonIndex: '',
     imageUrl: '',
     types: [],
@@ -47,6 +48,7 @@ export default class Pokemon extends Component {
     genderRatioMale: '',
     genderRatioFemale: '',
     evs: '',
+    moves: '',
     hatchSteps: '',
     themeColor: '#EF5350'
   };
@@ -457,6 +459,9 @@ export default class Pokemon extends Component {
                   </div>
                   <div className="col-6">
                     <h6 className="float-left">{this.state.evs}</h6>
+                  </div>
+                  <div className="col-6">
+                    <h6 className="float-left">{this.state.moves}</h6>
                   </div>
                 </div>
               </div>
