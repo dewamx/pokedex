@@ -48,7 +48,8 @@ export default class Pokemon extends Component {
     genderRatioFemale: '',
     evs: '',
     hatchSteps: '',
-    themeColor: '#EF5350'
+    themeColor: '#EF5350',
+    moves: []
   };
 
   async componentDidMount() {
@@ -127,7 +128,19 @@ export default class Pokemon extends Component {
           .join(' ')}`;
       })
       .join(', ');
-
+    //var moves = pokemonRes.data.moves;
+    //for (var i = 0; i < pokemonRes.data.moves.length; i++){
+    //  moves = pokemonRes.data.moves[i].move.name;
+    //  console.log(moves);
+    //}
+      const moves = pokemonRes.data.moves.map(move => {
+        return move.move.name
+          .toLowerCase()
+          .split('-')
+          .map(s => s.charAt(0).toUpperCase()+ s.substring(1))
+          .join(' ');
+      })
+      .join("\n");
 
     // Get Pokemon Description .... Is from a different end point uggh
     await Axios.get(pokemonSpeciesUrl).then(res => {
@@ -183,7 +196,8 @@ export default class Pokemon extends Component {
       height,
       weight,
       abilities,
-      evs
+      evs,
+      moves
     });
   }
 
@@ -458,6 +472,11 @@ export default class Pokemon extends Component {
                   </div>
                   <div className="col-6">
                     <h6 className="float-left">{this.state.evs}</h6>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12">
+                    <h6 className="float-left">{this.state.moves}</h6>
                   </div>
                 </div>
               </div>
