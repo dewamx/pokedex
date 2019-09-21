@@ -133,14 +133,18 @@ export default class Pokemon extends Component {
     //  moves = pokemonRes.data.moves[i].move.name;
     //  console.log(moves);
     //}
+      
       const moves = pokemonRes.data.moves.map(move => {
-        return move.move.name
+        return (
+          <ul>
+         {move.move.name
           .toLowerCase()
           .split('-')
           .map(s => s.charAt(0).toUpperCase()+ s.substring(1))
-          .join(' ');
-      })
-      .join("\n");
+          .join(' ')}
+          </ul>
+      )})
+      
 
     // Get Pokemon Description .... Is from a different end point uggh
     await Axios.get(pokemonSpeciesUrl).then(res => {
@@ -474,10 +478,17 @@ export default class Pokemon extends Component {
                     <h6 className="float-left">{this.state.evs}</h6>
                   </div>
                 </div>
+              </div>
+              
+            </div>
+          </div>
+          <hr />
+          <div className="card-body">
+            <h5 className="card-title text-center">Moves</h5>
+            <div className="row">
+              <div className="col-md-12">
                 <div className="row">
-                  <div className="col-12">
-                    <h6 className="float-left">{this.state.moves}</h6>
-                  </div>
+                  <h6>{this.state.moves}</h6>
                 </div>
               </div>
             </div>
