@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom'
 // components
 import Signup from './components/sign-up'
 import LoginForm from './components/login-form'
 import Navbar from './components/navbar'
-// import Home from './components/home'
+import Home from './components/home'
 // import NavBar from './components/layout/NavBar';
 import Dashboard from './components/layout/Dashboard';
 import Pokemon from './components/pokemon/Pokemon';
+import PrivateRoute from './components/PrivateRoute'
 
 class App extends Component {
   constructor() {
@@ -52,48 +53,67 @@ class App extends Component {
     })
   }
 
+  
+
   render() {
-    return (
-      <div className="App">
-        <Navbar updateUser={this.updateUser} loggedIn={this.state.loggedIn} />
-        {!this.state.loggedIn ?
-        // if user not logged in,  force login
-        <Switch>
-          <Route
-          path="/signup"
-          render={() =>
-            <Signup/>}
-          />
-
-          <Route  //no path on this route means it is a catch-all
-          render={() =>
-              <LoginForm
-                updateUser={this.updateUser}
-              />
-            }
-          />
-
-        </Switch>
-        :
-        //if user is logged in
-
+    return(
+      <Router>
+        <div className="App">
+          APP STUFF GOES HERE
+          <Navbar updateUser={this.updateUser} loggedIn={this.state.loggedIn} />
           <Switch>
-            {/* build out more routes here */}
-            <Route
-            component={Dashboard} />
-            {/* <Route path="/signup" render={() => <Signup/>} /> */}
-              {/* <Route render={() => <LoginForm updateUser={this.updateUser} />} /> */}
-              <Route exact path="/" render={() => <Dashboard search={this.state.search}/> } />
-              <Route exact path="/pokemon/:pokemonIndex" component={Pokemon} />
+            <PrivateRoute path="/dashboard" component={Dashboard}/>
+            <Route path="/home">
+              <Dashboard/>
+            </Route>
+            <Route path="/signup"> 
+              <Signup/>
+            </Route>
+            <Route path="/login">
+              <LoginForm></LoginForm>
+            </Route>
           </Switch>
-        }
+        </div>
+      </Router>
+    )
+      // <div className="App">
+      //   {!this.state.loggedIn ?
+      //   // if user not logged in,  force login
+      //   <Switch>
+      //     <Route
+      //     path="/signup"
+      //     render={() =>
+      //       <Signup/>}
+      //     />
+
+      //     <Route  //no path on this route means it is a catch-all
+      //     render={() =>
+      //         <LoginForm
+      //           updateUser={this.updateUser}
+      //         />
+      //       }
+      //     />
+
+      //   </Switch>
+      //   :
+      //   //if user is logged in
+
+      //     <Switch>
+      //       {/* build out more routes here */}
+      //       <Route
+      //       component={Dashboard} />
+      //       {/* <Route path="/signup" render={() => <Signup/>} /> */}
+      //         {/* <Route render={() => <LoginForm updateUser={this.updateUser} />} /> */}
+      //         <Route exact path="/" render={() => <Dashboard search={this.state.search}/> } />
+      //         <Route exact path="/pokemon/:pokemonIndex" component={Pokemon} />
+      //     </Switch>
+      //   }
 
        
         
         
 
-      </div>
-    );
+      // </div>
   }
 }
 
